@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Lançamentos{% endblock %}
+
+{% block content %}
+<h2>Lançamentos Contábeis</h2>
+<form method="post">
+    <label for="conta_debito">Conta Débito:</label>
+    <select id="conta_debito" name="conta_debito" required>
+        {% for conta in contas %}
+            <option value="{{ conta.nome }}">{{ conta.nome }} ({{ conta.tipo }})</option>
+        {% endfor %}
+    </select>
+
+    <label for="conta_credito">Conta Crédito:</label>
+    <select id="conta_credito" name="conta_credito" required>
+        {% for conta in contas %}
+            <option value="{{ conta.nome }}">{{ conta.nome }} ({{ conta.tipo }})</option>
+        {% endfor %}
+    </select>
+
+    <label for="valor">Valor:</label>
+    <input type="number" id="valor" name="valor" step="0.01" required>
+
+    <button type="submit">Lançar</button>
+</form>
+
+<h3>Lançamentos registrados</h3>
+<ul>
+    {% for lanc in lancamentos %}
+        <li>
+            Débito: {{ lanc.conta_debito }} | Crédito: {{ lanc.conta_credito }} | Valor: R$ {{ "%.2f"|format(lanc.valor) }}
+        </li>
+    {% else %}
+        <li>Nenhum lançamento registrado.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
